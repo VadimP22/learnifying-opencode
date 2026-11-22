@@ -20,7 +20,8 @@ For each planned visual, first state:
 - whether it should be static, animated, interactive, or a live technical preview;
 - the minimum functionality required;
 - its accuracy and assessment requirements;
-- the supported learner devices/browsers and offline/file-based constraints.
+- the supported learner devices/browsers and offline/file-based constraints;
+- the app's mandatory Light/Dark theme system and whether the visual must react to theme changes at runtime.
 
 Only after the teaching purpose is clear should implementation options be compared. First inspect the existing app stack/dependencies and the native browser primitives that could meet the requirement. Even for Tier 0, make and record an explicit native/custom-vs-library decision; a brief inspection is enough and an external package search is normally unnecessary. For Tier 1/2, investigate current libraries when they could materially improve correctness, complexity, accessibility, reliability, or performance. Never choose a popular library first and invent a reason to use it afterwards.
 
@@ -106,6 +107,7 @@ Verify the following, to the extent applicable:
 - single-file packaging and `file://` constraints;
 - use of dynamic imports, workers, WASM, external assets, fonts, or network fetches;
 - keyboard support, focus management, semantic labels, screen-reader behaviour, reduced-motion support, and mobile/touch interactions;
+- documented Light/Dark theming API or a reliable custom styling path; whether theme changes update plot/editor/canvas/widget surfaces, labels, controls, syntax colours, and annotations without resetting the visual state;
 - approximate bundle/runtime cost and startup/performance implications;
 - fallback behaviour when WebGL/WebGPU, storage, workers, or other APIs are unavailable.
 
@@ -123,6 +125,7 @@ Use this matrix to guide, not mechanically automate, the decision:
 | Small, deterministic interaction | Often best | Consider if it removes meaningful complexity |
 | Complex domain rendering/simulation | Often expensive/risky to build | Usually investigate first |
 | Accessibility requirements | Must be implemented and tested | Verify actual library support; do not assume |
+| Light/Dark theme support | Implement from shared semantic tokens | Verify theming API or reliable styling adapter; test runtime switching and state preservation |
 | `file://` single-file target | Often straightforward for DOM/SVG; still test | Must verify dynamic assets/workers/WASM/imports |
 | Maintenance burden | Owned by this app | Shared with maintainers; verify project health |
 | Bundle size | Can be very small | Measure actual production contribution |
@@ -166,6 +169,7 @@ Use one entry per visual family or technically distinct renderer, not one entry 
 - Licence:
 - Maintenance/security findings:
 - Accessibility and mobile findings:
+- Light/Dark theming API and runtime-switch findings:
 - Offline / single-file / `file://` findings:
 - Bundle/runtime impact (measured or clearly marked estimate):
 - Proof-of-feasibility commands and results:

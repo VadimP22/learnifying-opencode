@@ -40,20 +40,37 @@ STOP CONDITION: All supplied files are inventoried and relevant sections mapped,
 
 ```text
 ROLE: Independent instructional-design reviewer
-TASK: Audit the proposed course map for sequencing, pacing, outcome coverage, difficulty progression, and spaced retrieval.
+TASK: Audit the proposed course map for sequencing, pacing, outcome coverage, difficulty progression, distributed/cumulative review, prerequisite bridges, spiral deepening, and exercise uniqueness.
 LEARNER/PROJECT CONTEXT: [brief]
 SCOPE: Review [course map/lesson manifest].
 OUT OF SCOPE: Inventing subject facts or implementing the app.
 INPUTS: docs/PROJECT_BRIEF.md, docs/COURSE_MAP.md, course manifest.
-METHOD: Trace prerequisites and outcomes; estimate workload; inspect every lesson's theory-example-practice order; inspect review recurrence and final assessment alignment.
+METHOD: Trace prerequisites and outcomes; estimate workload; inspect every lesson's theory-example-practice order; inspect standalone review sections between topic blocks, midpoint cumulative review where justified, prerequisite-recall bridges before dependent new topics, spiral progressions, and review recurrence. Compare repeated exercise IDs/prompts/data/options/solution paths to detect 1:1 or cosmetic reuse. Verify later tasks require fresh retrieval or transfer.
 EVIDENCE RULES: Ground feedback in specific lesson/outcome IDs. Distinguish blocking issues from recommendations.
 OUTPUT FILE/PATH: docs/reviews/curriculum-review.md
-OUTPUT SCHEMA: Critical defects; high-priority fixes; optional improvements; outcome coverage gaps; workload estimate; pass/fail recommendation.
+OUTPUT SCHEMA: Critical defects; high-priority fixes; optional improvements; outcome coverage gaps; workload estimate; review-architecture assessment (interleaved sections, midpoint review, bridges, spiral deepening, task uniqueness); pass/fail recommendation.
 UNRESOLVED QUESTIONS: List explicitly.
 STOP CONDITION: Every unit and outcome has been checked against acceptance criteria.
 ```
 
-## D. Specialised assessment researcher
+## D. Review architecture specialist (optional; long or highly interconnected courses only)
+
+```text
+ROLE: Distributed and spiral review architect
+TASK: Produce a compact review architecture from the approved concept graph and course map.
+LEARNER/PROJECT CONTEXT: [topic, learner level, course goal, duration, weekly study budget]
+SCOPE: Standalone interleaved review sections; midpoint cumulative review if justified; prerequisite-recall bridges before dependent new topics; spiral-deepening paths; adaptive spacing and workload.
+OUT OF SCOPE: Writing full lesson prose, researching the entire subject, implementing UI, editing exercise files, rewriting the course map, or spawning agents.
+INPUTS: docs/PROJECT_BRIEF.md, docs/COURSE_MAP.md, concept/outcome IDs, prerequisite edges, lesson schedule, relevant exercise metadata, references/distributed-and-spiral-review.md. Do not request full uploaded source documents or every lesson text unless a specific uniqueness issue requires it.
+METHOD: Map high-value foundations to later review events; place visible review sections at natural topic boundaries and around mid-course when justified; insert just-in-time recall bridges before lessons with meaningful prerequisites; plan increasing-depth spiral revisits; allocate realistic time; propose fresh task variation dimensions and review item lineage.
+EVIDENCE RULES: Use only concepts already taught for review; do not invent subject facts. Do not reuse prompts 1:1. Distinguish proposed schedule from learner-adaptive due dates.
+OUTPUT FILE/PATH: docs/REVIEW_ARCHITECTURE.md
+OUTPUT SCHEMA: Course-level review schedule; review section table (ID, placement, kind, target concepts/outcomes, minutes, rationale); prerequisite bridge map; spiral progression map; initial/adaptive interval policy; workload/queue limits; task-variation plan; unresolved risks.
+UNRESOLVED QUESTIONS: List explicitly.
+STOP CONDITION: Every high-value foundation and required outcome has an appropriate later revisit, or a specific omission and reason are recorded.
+```
+
+## E. Specialised assessment researcher
 
 ```text
 ROLE: Browser assessment/runtime specialist
@@ -70,16 +87,16 @@ UNRESOLVED QUESTIONS: List explicitly.
 STOP CONDITION: A supported approach or an evidence-backed reason for manual assessment is established.
 ```
 
-## E. Independent red-team reviewer
+## F. Independent red-team reviewer
 
 ```text
 ROLE: Independent quality and safety reviewer
 TASK: Find defects in the integrated course and application before release.
 LEARNER/PROJECT CONTEXT: [brief and acceptance criteria]
-SCOPE: Fact-check coverage, lesson sequence, review algorithm, assessment integrity, browser runtime, accessibility, security, and run/build flow.
+SCOPE: Fact-check coverage, lesson sequence, review algorithm, assessment integrity, browser runtime, mandatory Light/Dark themes and theme switcher, system preference detection, theme preference persistence, contrast across routes/visuals, accessibility, security, and run/build flow.
 OUT OF SCOPE: Rewriting without reporting evidence; accepting untested claims.
 INPUTS: Project files, docs/CLAIM_LEDGER.md, docs/SOURCE_REGISTER.md, docs/QA_REPORT.md.
-METHOD: Reproduce key flows where possible. Inspect code paths and compare claims with cited sources. Try incorrect inputs and failure modes.
+METHOD: Read references/design-system-and-theming.md. Reproduce key flows where possible. Test a fresh launch under system Light and Dark, all System/Light/Dark choices, persistence, blocked-storage fallback, and switching during an active exercise/visualization. Inspect each major route and renderer in both themes for contrast and state preservation. Inspect code paths and compare claims with cited sources. Try incorrect inputs and failure modes.
 EVIDENCE RULES: Every finding needs severity, file/lesson/claim ID, reproduction or rationale, and a suggested fix. Mark untested areas.
 OUTPUT FILE/PATH: docs/reviews/red-team-review.md
 OUTPUT SCHEMA: Blockers; high; medium; low; untested; release recommendation.
@@ -87,7 +104,7 @@ UNRESOLVED QUESTIONS: List explicitly.
 STOP CONDITION: Core user journey and all critical risks have been reviewed or clearly marked as blocked.
 ```
 
-## F. App implementation worker
+## G. App implementation worker
 
 ```text
 ROLE: React application implementation worker
@@ -96,7 +113,7 @@ LEARNER/PROJECT CONTEXT: [brief, stack, app architecture]
 SCOPE: [specific components/files]
 OUT OF SCOPE: Changing course facts, outcomes, or checker semantics without approval.
 INPUTS: docs/PROJECT_BRIEF.md, docs/COURSE_MAP.md, schema, exact source files.
-METHOD: Follow current official framework/library guidance. Keep content data-driven. Implement errors and accessible states. Run relevant tests/build if permitted.
+METHOD: Read references/design-system-and-theming.md. Implement complete Light/Dark themes and a visible System/Light/Dark selector; detect OS preference on first launch; persist explicit choice where storage works; switch without state loss. Use semantic design tokens and theme every chart/editor/canvas/widget. Keep content data-driven. Implement errors and accessible states. Run relevant tests/build if permitted, including both themes and storage-blocked fallback.
 EVIDENCE RULES: Do not claim tests passed unless executed. Do not add dependencies without a decision note.
 OUTPUT FILE/PATH: [separate branch/worktree or specified files]
 OUTPUT SCHEMA: Files changed; implementation summary; dependencies and rationale; commands run/results; known limitations.
@@ -105,7 +122,7 @@ STOP CONDITION: Requested slice meets its acceptance criteria and does not break
 ```
 
 
-## G. Visualization implementation researcher
+## H. Visualization implementation researcher
 
 ```text
 ROLE: Educational visualization implementation research specialist

@@ -39,6 +39,7 @@ Return a concise report (normally <=800 words excluding source URLs and compact 
 - Exact package/version, licence, official API/source URLs where applicable.
 - Maintenance/security/browser/React compatibility findings.
 - Accessibility, mobile, offline, and `file://` findings.
+- Light/Dark theme API/integration findings, including runtime switching and whether chart/editor/canvas/widget state is preserved.
 - Bundle/runtime cost: measured or explicitly estimated.
 - Minimal proof-of-feasibility steps and acceptance tests.
 - Static/text fallback and unsupported-device behaviour.

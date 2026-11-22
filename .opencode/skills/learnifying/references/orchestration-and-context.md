@@ -26,7 +26,7 @@ Before delegation:
 
 ## 3. Recommended roles
 
-OpenCode worker profiles provided by this package: `learnifying-researcher`, `learnifying-curriculum-reviewer`, `learnifying-assessment-specialist`, `learnifying-visualization-specialist`, `learnifying-app-implementer`, and `learnifying-auditor`. Use only the roles needed for the current phase.
+OpenCode worker profiles provided by this package: `learnifying-researcher`, `learnifying-curriculum-reviewer`, `learnifying-review-architect` (optional for long/highly interconnected courses), `learnifying-assessment-specialist`, `learnifying-visualization-specialist`, `learnifying-app-implementer`, and `learnifying-auditor`. Use only the roles needed for the current phase.
 
 
 Use only roles that add value to the subject. Usually 2–4 concurrent work packages are enough.
@@ -36,6 +36,7 @@ Use only roles that add value to the subject. Usually 2–4 concurrent work pack
 | Research scout | Evidence for one bounded subject area; source/claim ledger entries | Design the whole course or assert unsupported facts |
 | Attachment analyst | Map user files to concepts, outcomes, gaps, and possible outdated material | Treat every uploaded statement as current truth |
 | Curriculum architect | Outcomes, prerequisites, pacing, lesson map, review schedule | Write unsupported subject facts or implement UI |
+| Review architect (optional) | Interleaved/cumulative review sections, prerequisite recall bridges, spiral-deepening map, review-item variation plan | Write full lesson prose, research unrelated subject facts, implement UI, or edit lesson exercises |
 | Assessment specialist | Exercise formats, browser execution/checking options, rubrics | Call an exercise auto-checked without a runnable checker |
 | Visualization specialist | Evidence-backed custom-vs-library choice and browser renderer research for complex visuals | Research trivial native diagrams, design the whole course, or implement app code |
 | App builder | Implement agreed course schema and UX | Change learning outcomes or invent lesson content silently |
@@ -48,6 +49,7 @@ A single agent may own more than one role if capacity is limited, but keep the p
 Decompose by independent subject modules or questions, not by arbitrary word count. Each research task should answer a finite set of questions and stop when its scope is covered or sources become unavailable.
 
 Good work packages:
+- “Design interleaved, midpoint, prerequisite-bridge, and spiral review placements from this compact concept graph; return only `docs/REVIEW_ARCHITECTURE.md`.”
 - “Verify the current WebGL2 shader compilation workflow in browsers and identify supported test strategies.”
 - “Map the supplied chapters 2–4 to beginner learning outcomes; flag any version-specific claims.”
 - “Review whether the proposed 8-week schedule provides enough retrieval practice and a smooth difficulty ramp.”
@@ -140,7 +142,16 @@ Workers must quote sparingly, paraphrase, and retain URLs. Search snippets alone
 - The visualization specialist returns a concise comparison and evidence record; the parent owns the final choice. The implementation worker receives only the approved decision and exact API requirements.
 - Require a tiny packaged spike for complex dependencies before assigning substantial implementation work. Store the result and limitations in `docs/VISUAL_IMPLEMENTATION_DECISIONS.md`.
 
-## 11. Failure fallback
+## 11. Review-architecture delegation and context rules
+
+- Do not run the review architect for a short/simple course with few concepts; the lead agent can use the reference directly.
+- Consider one `learnifying-review-architect` pass for courses with many units, long duration, or a dense prerequisite graph. This is optional and should not become another always-on worker.
+- Send only the learner/course brief summary, time budget, course map, unit/lesson IDs, concept/outcome IDs, prerequisite edges, lesson timing, and brief exercise-format metadata. Do not send entire uploaded books, all research notes, or full lesson prose by default.
+- The worker owns a single new output file, `docs/REVIEW_ARCHITECTURE.md`. The parent integrates it; the curriculum reviewer audits it afterward. Never have the architect and reviewer edit the same file concurrently.
+- Use stable concept/outcome IDs across all handoffs. Pass variant IDs and task-uniqueness notes to the implementer, not full history transcripts.
+- The parent remains responsible for checking that the proposed review schedule fits the learner's actual time budget and does not crowd out new learning or catch-up capacity.
+
+## 12. Failure fallback
 
 If delegation fails, time is short, or workers return low-quality output:
 - reduce parallelism;

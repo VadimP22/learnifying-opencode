@@ -1,6 +1,6 @@
 ---
 name: Learnifying
-description: Turn a learner's topic and timeframe into a researched Russian-language adaptive course and React learning app. Use for curriculum design, separate theory/practice pages, visual explanations with evidence-based custom-vs-library selection, progressive exercises, spaced repetition, browser assessment, and self-contained HTML releases.
+description: Turn a learner's topic and timeframe into a researched Russian-language adaptive course and React learning app. Use for curriculum design, separate theory/practice pages, visual explanations with evidence-based custom-vs-library selection, progressive exercises, distributed and spiral review, browser assessment, and self-contained HTML releases.
 ---
 
 # Learnifying — Adaptive Learning App Builder
@@ -25,13 +25,14 @@ Do not stop at a syllabus or mock-up. Build the working application and its cour
 3. **Honest currency:** do not promise “100% up-to-date” or “100% verified”. Verify every material and time-sensitive claim to a documented standard, record the verification date, identify unresolved claims, and state the coverage and limitations.
 4. **Pedagogy:** every normal lesson follows **theory → worked example(s) → practice → feedback → spaced review**. A short diagnostic is allowed before the first lesson. Do not make a learner solve an unexplained concept as the first exposure.
 5. **Gradual challenge:** start with small, heavily scaffolded tasks. Increase complexity, independence, ambiguity, integration, and constraints over the course. The final tasks should require transfer, not merely repeat a template.
-6. **Retrieval and spacing:** schedule earlier concepts for later recall and practice. Do not rely on rereading alone. Adapt review timing to learner performance.
+6. **Distributed, cumulative, and spiral review:** create visible standalone review sections between topic blocks, a midpoint cumulative review when course length justifies it, and short prerequisite-recall bridges before later topics that depend on earlier knowledge. Revisit foundational concepts at increasing depth and transfer. Never reuse an earlier exercise 1:1; test the same concept with a genuinely new task, context, representation, or reasoning demand. Adapt timing to learner performance. Read `references/distributed-and-spiral-review.md` before designing the course map.
 7. **Runnable product:** deliver a coherent React app with `index.html` as the HTML entry point, course data, progress persistence, responsive UI, and working checks for exercises wherever feasible.
 8. **Tool choice by evidence:** use third-party libraries when they materially improve authoring, rendering, simulation, or assessment. Verify current maintenance, compatibility, license, security, and browser support before adopting them.
 9. **No fake assessment:** label an exercise “automatically checked” only when an actual checker runs. Otherwise provide a rubric, model answer, or manual self-check and label it honestly.
 10. **Visual explanations are a core teaching method:** when a concept benefits from visual representation, teach it with a carefully designed diagram, graph, animation, simulation, or interactive model alongside clear Russian-language explanation. Prefer visuals that reveal structure, change, cause-and-effect, spatial relationships, or the consequences of changing a parameter. Do not add decorative visuals merely to fill space. Plan visuals during curriculum design. **Before implementing each visual family, deliberately decide whether to build it with native/custom code or use an existing library.** Match research effort to complexity: simple visuals should normally use native HTML/CSS/SVG; specialised or complex visuals require current tool/library research and, when useful, the dedicated visualization subagent. Verify the proposed option against the single-file `file://` release target. Read `references/visual-learning-and-explanations.md` and `references/visualization-tool-selection.md`.
 11. **Accessibility and safety:** make the app usable with keyboard and assistive technology; isolate learner-supplied code; do not put secrets in frontend code; do not execute arbitrary submitted code in the app's trusted origin.
 12. **Executive-function-friendly without academic dilution:** reduce friction around starting, planning, resuming, and tracking work; do not remove productive struggle, retrieval practice, depth, or mastery criteria. Read `references/executive-function-friendly-design.md` and build its principles into curriculum and UI decisions.
+13. **Mandatory Light/Dark design system:** every generated app must ship with complete Light and Dark themes, a discoverable `System / Light / Dark` control, first-launch system preference detection, immediate switching without state loss, and persistence of explicit choices where the browser permits. Theme support covers charts, code editors, canvases, visualizations, feedback, and every major route. Read `references/design-system-and-theming.md`; do not treat theming as optional polish.
 
 ## Workflow
 
@@ -72,14 +73,14 @@ Before research, summarize the agreed brief in Russian and explicitly mark assum
 
 ### Phase 3 — Curriculum architecture
 
-- Read `references/curriculum-design.md`, `references/executive-function-friendly-design.md`, and `references/visual-learning-and-explanations.md`.
-- Define measurable outcomes, prerequisites, a diagnostic, units, lessons, calendar, checkpoints, cumulative reviews, and a final assessment/project.
+- Read `references/curriculum-design.md`, `references/distributed-and-spiral-review.md`, `references/executive-function-friendly-design.md`, and `references/visual-learning-and-explanations.md`.
+- Define measurable outcomes, prerequisites, a diagnostic, units, lessons, calendar, checkpoints, standalone interleaved review sections, a midpoint cumulative review where justified, prerequisite-recall bridges, spiral-deepening paths, and a final assessment/project. Read `references/distributed-and-spiral-review.md`.
 - For each key concept/outcome, decide whether a diagram, chart, sequence, animation, simulation, interactive model, visual code output, or other representation would materially improve understanding. Record its teaching purpose, visual type, interaction model, fallback, and preliminary complexity tier in the lesson manifest before implementation.
 - Do not select a library during curriculum design merely by habit. The visual manifest describes what the learner needs to understand; the implementation choice is made in Phase 5 after reading `references/visualization-tool-selection.md`.
 - Plan theory and assessed practice as distinct learner-facing pages/routes. The theory page may contain exploratory explanatory visualizations, but must not embed the lesson's graded exercise sequence; the practice page contains the exercises and assessment.
 - Allocate time to explanation, worked examples, practice, review, and assessment. Do not fill every available minute with new material.
 - Ensure each lesson has theory before practice and that every exercise maps to an outcome.
-- Design progressive difficulty and spaced repetition before writing the full lesson prose.
+- Design progressive difficulty and the complete distributed/cumulative/spiral review architecture before writing the full lesson prose. Save the plan in `docs/REVIEW_ARCHITECTURE.md`. For large or highly interconnected courses, use the bounded review-architect delegation described in `references/distributed-and-spiral-review.md`.
 - Produce a compact course map and a lesson-by-lesson manifest.
 
 ### Phase 4 — Exercise and assessment design
@@ -100,18 +101,20 @@ Before research, summarize the agreed brief in Russian and explicitly mark assum
 - The lead agent approves the choice. Implementation workers must not add or swap visual dependencies without recording and reporting a revised decision.
 - Use React. `index.html` must be the project HTML entry point. Prefer a small, conventional toolchain such as Vite + React when the environment supports package installation and builds; verify current versions and compatibility before pinning dependencies.
 - Keep curriculum content data-driven and separate from presentation. Do not hardcode a whole course into one giant component.
-- Implement course navigation, schedule, lesson view, theory, examples, exercises, feedback, review queue, progress, and settings at a minimum.
-- Persist progress and review schedule locally by default. Provide export/import or another recovery path where practical. State clearly if data stays only in the browser.
+- Read `references/design-system-and-theming.md` and implement its mandatory Light/Dark theme system before styling the full UI.
+- Implement course navigation with visually distinct review-section entries, schedule, lesson view, theory, examples, exercises, feedback, review queue, prerequisite-recall bridges, progress, and settings at a minimum. Use the approved `docs/REVIEW_ARCHITECTURE.md` and the data contract in `references/distributed-and-spiral-review.md`. Include a visible theme switcher in a persistent, discoverable app location.
+- Persist progress, review schedule, and explicit theme preference locally by default. Provide export/import or another recovery path where practical. State clearly if data stays only in the browser.
 - Make all visible content Russian. Keep technical identifiers and code samples in their original form.
 
 ### Phase 6 — Quality assurance and release
 
 - Read `references/qa-release-checklist.md`.
 - Run install/build/lint/tests where tools permit. Launch the app and exercise its key flows in a browser when browser tools are available.
-- Test a fresh learner, a returning learner, a failed answer, a passed answer, a due review, a completed lesson, and persisted progress.
+- Test a fresh learner, a returning learner, a failed answer, a passed answer, an interleaved review section, the midpoint review where present, a prerequisite bridge before dependent new theory, a spiral-deepening task, a due review, a completed lesson, and persisted review progress. Verify that no review task duplicates an earlier task 1:1.
 - Check that every lesson follows the required order and that the schedule matches the stated duration and workload.
 - Check that theory and practice are on separate routes/pages, and that no graded exercise sequence is accidentally embedded at the bottom of the theory page.
 - Check each key concept for an appropriate visual explanation; verify that visuals are accurate, labelled, accessible, pedagogically useful, and not merely decorative.
+- Verify the Light/Dark theme system: fresh-launch OS preference, all three selections (`System`, `Light`, `Dark`), immediate switching without state loss, persistence where supported, storage-failure fallback, and contrast/readability across every major route and visual renderer.
 - Audit the custom-vs-library decision for every non-trivial visual. Confirm that complex library choices have current evidence for API/version, maintenance, licence, security, browser support, accessibility, bundle/runtime cost, offline use, and `file://` compatibility. Confirm that proof-of-feasibility results refer to the actual release strategy.
 - Open the exact final `index.html` from the filesystem (`file://`) in a supported browser. A dev-server preview does not satisfy this check.
 - Check all material claims against the claim ledger and all linked sources.
@@ -147,7 +150,7 @@ Read `references/orchestration-and-context.md` and `references/opencode-integrat
 
 - First inspect the agent environment's documented subagent mechanism. Never invent a tool or pretend to have spawned an agent.
 - The orchestrator owns the learner brief, final decisions, integration, and release gate.
-- Delegate independent, bounded work packages—usually 2–4 at a time. Good roles: subject research, uploaded-material mapping, curriculum design review, specialised assessment research, code implementation, and independent red-team verification.
+- Delegate independent, bounded work packages—usually 2–4 at a time. Good roles: subject research, uploaded-material mapping, curriculum design review, optional review-architecture design for long/interconnected courses, specialised assessment research, code implementation, and independent red-team verification.
 - Do not let several agents edit the same file concurrently. Workers return findings or separate files; the orchestrator integrates them.
 - Every delegation must include a compact context packet, exact scope, exclusions, output schema, source requirements, and a stop condition.
 - Keep durable knowledge in workspace documents, not in conversational memory. Pass summaries and file paths, not entire transcripts or giant source dumps.
@@ -166,11 +169,20 @@ The task is complete only when all applicable items are true:
 - [ ] Visual explanations are accurate, labelled, accessible, complementary to text, and interactive where meaningful and technically feasible.
 - [ ] Every visual family has a reasoned native/custom-vs-library choice; complex choices have a research record and a tested proof-of-feasibility or a clearly disclosed blocker.
 - [ ] Difficulty progresses intentionally from scaffolded micro-tasks to independent/integrated tasks.
-- [ ] Previous material reappears through scheduled retrieval practice.
+- [ ] The course roadmap contains standalone review sections between topic blocks wherever course length and workload justify them; these are not appended to ordinary lesson pages.
+- [ ] A separate midpoint cumulative review section is present when the course is long enough to justify it, or the omission is explained.
+- [ ] Before new topics that depend on earlier knowledge, the learner gets a distinct prerequisite-recall bridge when useful; it tests only already-taught concepts and precedes the new theory.
+- [ ] Foundational concepts return through spiral deepening at higher levels of application and transfer.
+- [ ] Repeated concepts are tested with fresh tasks; no exercise is reused 1:1, and meaningful variation is documented.
+- [ ] Review timing, workload, due state, attempts, and mastery are tracked without creating an unbounded or punitive backlog.
 - [ ] Every exercise has feedback and a real checker or an honestly labelled manual rubric.
+- [ ] Review architecture is documented in `docs/REVIEW_ARCHITECTURE.md` and independently checked.
 - [ ] Current and user-supplied materials are represented in source notes, with conflicts and limitations documented.
 - [ ] Material factual claims have traceable evidence and verification dates.
 - [ ] React app uses `index.html` as entry point and includes functioning navigation and progress persistence.
+- [ ] Complete Light and Dark themes exist, with a visible System/Light/Dark control and first-launch system preference detection.
+- [ ] Theme switching is immediate, preserves application/learner state, and persists explicit preference where browser storage allows.
+- [ ] All major routes, editors, charts, diagrams, canvases, and feedback components are usable in both themes; contrast and keyboard accessibility are checked.
 - [ ] The final production deliverable is a single self-contained `index.html` that has been tested by opening it directly from disk without a local server, or any unavoidable compatibility exception is clearly documented.
 - [ ] Theory and practice use separate pages/routes.
 - [ ] Build and available tests pass, or failures/blockers are clearly reported.

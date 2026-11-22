@@ -57,10 +57,10 @@ Every regular lesson uses this order:
 4. **Разобранный пример** — a fully worked example with intermediate steps and commentary, still within the theory/teaching experience.
 5. **Практика** — exercises ordered from guided to independent, on a separate page/route from theory. Do not append a long exercise list beneath the theory text.
 6. **Проверка и обратная связь** — actual automatic checks or a transparent manual rubric, with hints and explanations.
-7. **Повторение** — due retrieval questions from older lessons, not just a summary to reread.
+7. **Краткое извлечение из памяти (если уместно)** — один небольшой due prompt может закрепить связь с ранее изученным, но не заменяет отдельные межтематические/кумулятивные разделы повторения и prerequisite-bridges по `distributed-and-spiral-review.md`.
 8. **Итог и следующий шаг** — concise recap, completion criteria, and preview.
 
-A diagnostic can precede the first lesson. A short recall prompt at the start of a later lesson is permitted, but it does not replace that lesson's theory-before-practice order for new concepts.
+A diagnostic can precede the first lesson. A short recall prompt at the start/end of a later lesson is permitted as a supplement only. Standalone review sections and prerequisite bridges remain separate roadmap entries/routes; do not turn the lesson sequence into a container for all review activity.
 
 ## 6. Difficulty ramp
 
@@ -86,7 +86,9 @@ Example progression:
 
 Adapt the progression to the topic; levels are not a fixed number of lessons.
 
-## 7. Spaced repetition and retrieval practice
+## 7. Distributed, cumulative, and spiral review
+
+Read `distributed-and-spiral-review.md` and design the review architecture before authoring full lesson content. The full course must distinguish standalone review sections between topics, a midpoint cumulative review where justified, prerequisite-recall bridges before dependent new topics, spiral-deepening revisits, and the adaptive due-review queue. A small due-review prompt inside a lesson may supplement this architecture but must not replace the standalone review sections.
 
 Use active recall: ask the learner to retrieve, explain, calculate, implement, or distinguish an earlier concept before showing the answer. Prefer short mixed review sets over passive rereading.
 
@@ -99,7 +101,10 @@ Use an adaptive schedule, not a rigid claim that one forgetting curve fits every
 These are configurable defaults, not universal psychological constants. If a course is shorter than the interval, compress intervals to fit while retaining spacing. If a learner repeatedly fails, reduce difficulty, reteach the prerequisite, and then test again with a new example.
 
 Review queue rules:
-- resurface high-value concepts after initial learning;
+- resurface high-value concepts after initial learning through the planned review sections and due queue;
+- include prerequisite recall before dependent new topics when there is a meaningful dependency and the learner benefits from activation;
+- use spiral revisits to deepen application, representation, integration, and transfer rather than repeating a basic recall prompt;
+- prohibit exact exercise reuse and document meaningful variation across repeated tasks;
 - mix older concepts with current material once the learner has a foundation;
 - prioritise due reviews and prerequisite-critical errors;
 - do not overload a day—cap the review queue and carry excess forward;
@@ -121,7 +126,7 @@ Avoid infinite locked progression. Allow learners to revisit content and disting
 
 ## 9. Course manifest schema
 
-Use a stable, data-driven schema. A lesson record should include at least:
+Use a stable, data-driven schema. The top-level course roadmap must support standalone `type: "review"` sections with a `reviewKind` such as `interleaved`, `midcourse-cumulative`, `prerequisite-bridge`, or `spiral-deepening`; see `distributed-and-spiral-review.md` for the recommended contract. Review sections need stable IDs, target concept/outcome IDs, exercise IDs, estimated duration, placement, completion criteria, and a short learner-facing reason. Ordinary lesson records continue to use the schema below. A lesson record should include at least:
 
 ```json
 {
@@ -148,7 +153,7 @@ Exercise records should be separate and include `type`, `prompt`, `inputSpec`, `
 Use a cumulative assessment that maps to the course outcomes. For practical subjects, prefer a capstone, portfolio artifact, experiment, implementation, or realistic scenario plus a short explanation. Include a rubric with criteria and levels. A learner should know what “finished” means before beginning the final task.
 
 
-## 10. Executive-function-friendly course design
+## 11. Executive-function-friendly course design
 
 Read `executive-function-friendly-design.md` for the full interaction policy. Apply it while planning the calendar and lesson structure:
 
@@ -161,7 +166,7 @@ Read `executive-function-friendly-design.md` for the full interaction policy. Ap
 - Keep low-stakes retrieval and cumulative review. A supportive tone must not turn recall into passive rereading or reveal answers before a genuine attempt.
 
 
-## 11. Visual explanation planning
+## 12. Visual explanation planning
 
 Treat visual explanations as a core instructional design decision. For every major concept, ask what the learner needs to see to understand it: structure, relationships, spatial form, change over time, causality, quantitative trend, algorithmic state, or the result of manipulating a parameter. Choose a representation that directly exposes that feature. Examples include labelled diagrams, concept maps, timelines, annotated graphs, state-transition diagrams, step-by-step illustrations, interactive parameter controls, simulations, and live rendered output.
 
