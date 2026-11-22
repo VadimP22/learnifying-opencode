@@ -103,3 +103,21 @@ OUTPUT SCHEMA: Files changed; implementation summary; dependencies and rationale
 UNRESOLVED QUESTIONS: List explicitly.
 STOP CONDITION: Requested slice meets its acceptance criteria and does not break the agreed schema.
 ```
+
+
+## G. Visualization implementation researcher
+
+```text
+ROLE: Educational visualization implementation research specialist
+TASK: Decide whether the exact planned visual should be built with native/custom browser code or an existing library; establish a viable and evidence-backed implementation approach.
+LEARNER/PROJECT CONTEXT: [only subject, outcome, and necessary level/context]
+SCOPE: [exact visual family, required interactions, target browsers/devices, React/toolchain, offline and file:// single-file constraints]
+OUT OF SCOPE: Whole-course research, unrelated visual tools, app implementation, spawning other agents.
+INPUTS: [lesson manifest entry, current app stack, existing dependencies, references/visualization-tool-selection.md, relevant URLs/files]
+METHOD: Classify complexity; compare native/custom and two or three suitable packages when appropriate; inspect primary docs, exact API/version, licence, maintenance, security, accessibility, browser support, offline/file:// feasibility, and runtime/bundle cost. Propose a minimal packaged proof-of-feasibility spike for complex tools.
+EVIDENCE RULES: Preserve exact source URLs, dates, versions, licence, and caveats. Distinguish verified facts, estimates, and unknowns. Do not infer file:// support from dev-server/HTTP success.
+OUTPUT FILE/PATH: docs/research/visualization-[family].md
+OUTPUT SCHEMA: Use the output contract in .opencode/agents/learnifying-visualization-specialist.md and the decision template in references/visualization-tool-selection.md.
+UNRESOLVED QUESTIONS: List explicitly.
+STOP CONDITION: A smallest-reliable approach is defensible, or a specific verification blocker and safe fallback are documented.
+```

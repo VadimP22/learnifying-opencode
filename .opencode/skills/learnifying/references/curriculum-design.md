@@ -53,9 +53,9 @@ Every regular lesson uses this order:
 
 1. **Цели урока** — what the learner will be able to do.
 2. **Связь с предыдущими темами** — prerequisites and a short recall prompt if useful.
-3. **Теория** — structured explanation, definitions, intuition, diagrams/examples where useful, common misconceptions, and source notes.
-4. **Разобранный пример** — a fully worked example with intermediate steps and commentary.
-5. **Практика** — exercises ordered from guided to independent.
+3. **Теория** — structured explanation, definitions, intuition, purposeful diagrams/graphs/animations or interactive explanatory models where useful, common misconceptions, and source notes. The theory is delivered on its own page/route.
+4. **Разобранный пример** — a fully worked example with intermediate steps and commentary, still within the theory/teaching experience.
+5. **Практика** — exercises ordered from guided to independent, on a separate page/route from theory. Do not append a long exercise list beneath the theory text.
 6. **Проверка и обратная связь** — actual automatic checks or a transparent manual rubric, with hints and explanations.
 7. **Повторение** — due retrieval questions from older lessons, not just a summary to reread.
 8. **Итог и следующий шаг** — concise recap, completion criteria, and preview.
@@ -159,3 +159,12 @@ Read `executive-function-friendly-design.md` for the full interaction policy. Ap
 - Retain sufficiently long uninterrupted blocks for deep work when the outcome requires it.
 - After missed sessions, preserve learned mastery, identify the most important next action, and reschedule only what is pedagogically necessary.
 - Keep low-stakes retrieval and cumulative review. A supportive tone must not turn recall into passive rereading or reveal answers before a genuine attempt.
+
+
+## 11. Visual explanation planning
+
+Treat visual explanations as a core instructional design decision. For every major concept, ask what the learner needs to see to understand it: structure, relationships, spatial form, change over time, causality, quantitative trend, algorithmic state, or the result of manipulating a parameter. Choose a representation that directly exposes that feature. Examples include labelled diagrams, concept maps, timelines, annotated graphs, state-transition diagrams, step-by-step illustrations, interactive parameter controls, simulations, and live rendered output.
+
+Record the visual choice in the lesson specification (concept/outcome, learning purpose, visual form, learner interaction if any, caption/labels, source or derivation, and fallback). Prefer one clear, well-integrated visual over a collection of unrelated images. Explain what to notice and connect the visual explicitly to the accompanying prose.
+
+The theory page may contain exploratory interactions that explain a mechanism (for example, changing a shader uniform and observing its output). These are explanatory demonstrations, not the assigned graded exercise. Keep assessed tasks, submissions, scoring, and practice feedback on the separate practice page. Read `visual-learning-and-explanations.md` for implementation and accessibility requirements.

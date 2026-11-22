@@ -26,7 +26,7 @@ Before delegation:
 
 ## 3. Recommended roles
 
-OpenCode worker profiles provided by this package: `learnifying-researcher`, `learnifying-curriculum-reviewer`, `learnifying-assessment-specialist`, `learnifying-app-implementer`, and `learnifying-auditor`. Use the role descriptions below to select only the agents needed for the current phase.
+OpenCode worker profiles provided by this package: `learnifying-researcher`, `learnifying-curriculum-reviewer`, `learnifying-assessment-specialist`, `learnifying-visualization-specialist`, `learnifying-app-implementer`, and `learnifying-auditor`. Use only the roles needed for the current phase.
 
 
 Use only roles that add value to the subject. Usually 2–4 concurrent work packages are enough.
@@ -37,6 +37,7 @@ Use only roles that add value to the subject. Usually 2–4 concurrent work pack
 | Attachment analyst | Map user files to concepts, outcomes, gaps, and possible outdated material | Treat every uploaded statement as current truth |
 | Curriculum architect | Outcomes, prerequisites, pacing, lesson map, review schedule | Write unsupported subject facts or implement UI |
 | Assessment specialist | Exercise formats, browser execution/checking options, rubrics | Call an exercise auto-checked without a runnable checker |
+| Visualization specialist | Evidence-backed custom-vs-library choice and browser renderer research for complex visuals | Research trivial native diagrams, design the whole course, or implement app code |
 | App builder | Implement agreed course schema and UX | Change learning outcomes or invent lesson content silently |
 | Independent reviewer | Find factual, pedagogical, accessibility, security, and runtime defects | Rewrite the project wholesale without reporting findings |
 
@@ -61,7 +62,7 @@ Bad work packages:
 - Reserve enough context for final integration and QA; do not let research consume the whole window.
 - Aim to keep each handoff to a compact brief (roughly 300–700 words) plus links/paths to durable files. Adjust for model/context limits.
 - Do not paste entire uploaded books, long web pages, logs, or transcripts into every agent prompt. Extract relevant sections and keep source paths/URLs.
-- Store long-lived knowledge in files such as `docs/PROJECT_BRIEF.md`, `docs/COURSE_MAP.md`, `docs/CLAIM_LEDGER.md`, `docs/SOURCE_REGISTER.md`, `docs/DECISIONS.md`, and structured course data.
+- Store long-lived knowledge in files such as `docs/PROJECT_BRIEF.md`, `docs/COURSE_MAP.md`, `docs/CLAIM_LEDGER.md`, `docs/SOURCE_REGISTER.md`, `docs/DECISIONS.md`, `docs/VISUAL_IMPLEMENTATION_DECISIONS.md`, and structured course data.
 - Keep each lesson in a separate data object/file or small batch so the agent can author and review lessons without loading the entire course.
 - Use one canonical schema. Do not let agents invent incompatible JSON shapes.
 - Summarise only after preserving source references and relevant details. Summaries are not replacements for evidence.
@@ -130,7 +131,16 @@ Workers must quote sparingly, paraphrase, and retain URLs. Search snippets alone
 - Do not pin a model in the packaged worker definitions. Let each worker inherit the parent model unless the user explicitly configures a different model.
 - The main agent remains responsible for source verification, integration, and user-facing claims.
 
-## 10. Failure fallback
+## 10. Visualization-specific delegation and context rules
+
+- Do not launch the visualization specialist for a Tier 0 native diagram. The parent makes and records the straightforward choice.
+- Launch it for Tier 2 visuals and uncertain Tier 1 decisions where library research can materially change architecture, correctness, or feasibility.
+- Group related visual requirements by renderer/domain (for example, all shader lessons using the same rendering runtime) instead of launching one subagent per visual block.
+- If the assessment specialist is already investigating the exact same runtime for exercise execution/checking, assign the shared rendering-and-assessment questions to one bounded worker package to prevent duplicate searches.
+- The visualization specialist returns a concise comparison and evidence record; the parent owns the final choice. The implementation worker receives only the approved decision and exact API requirements.
+- Require a tiny packaged spike for complex dependencies before assigning substantial implementation work. Store the result and limitations in `docs/VISUAL_IMPLEMENTATION_DECISIONS.md`.
+
+## 11. Failure fallback
 
 If delegation fails, time is short, or workers return low-quality output:
 - reduce parallelism;

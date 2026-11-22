@@ -15,6 +15,7 @@ The package is designed for OpenCode's current directory-based skill discovery:
     learnifying-researcher.md
     learnifying-curriculum-reviewer.md
     learnifying-assessment-specialist.md
+    learnifying-visualization-specialist.md
     learnifying-app-implementer.md
     learnifying-auditor.md
 ```
@@ -49,7 +50,7 @@ Copy the folder `learnifying` from `.opencode/skills/` to:
 ~/.config/opencode/skills/learnifying/
 ```
 
-Copy the five files from `.opencode/agents/` to:
+Copy the six files from `.opencode/agents/` to:
 
 ```text
 ~/.config/opencode/agents/
@@ -59,11 +60,12 @@ Global skills and agents are then available across projects. Keep the skill's `r
 
 ## 4. Subagent strategy
 
-The package defines five reusable OpenCode subagents:
+The package defines six reusable OpenCode subagents:
 
 - `learnifying-researcher` — one bounded subject research package or analysis of supplied learning materials.
 - `learnifying-curriculum-reviewer` — independent review of prerequisites, workload, sequencing, difficulty, and spaced retrieval.
-- `learnifying-assessment-specialist` — research of browser-based renderers, runtimes, and reliable exercise checkers for a specific task type.
+- `learnifying-assessment-specialist` — research of browser-based runtimes and reliable exercise checkers for a specific task type.
+- `learnifying-visualization-specialist` — compares native/custom implementations with existing libraries for complex educational visuals and verifies packaging constraints.
 - `learnifying-app-implementer` — implementation of one approved, isolated app slice against the canonical schema.
 - `learnifying-auditor` — independent pre-release audit of evidence, pedagogy, UX, runtime, accessibility, and security.
 
@@ -75,12 +77,12 @@ Use separate child sessions for bounded tasks. Each child receives a fresh conte
 
 Recommended staging:
 
-1. **Research wave:** use 1–3 researcher instances for independent subject slices and/or supplied-material mapping; use the assessment specialist only if the task requires a specialised browser runtime.
+1. **Research wave:** use 1–3 researcher instances for independent subject slices and/or supplied-material mapping; use the assessment specialist only if a specialised exercise runtime is needed. Add the visualization specialist only for Tier 2 or uncertain Tier 1 visual choices; do not delegate simple native diagrams.
 2. **Curriculum gate:** after research findings are consolidated, ask the curriculum reviewer to audit the course map and workload.
 3. **Build wave:** after the canonical schema and scope are fixed, use the app implementer for one isolated feature or component set. Never assign overlapping file ownership to parallel implementers.
 4. **Release gate:** after integration, ask the auditor to review the actual project and the evidence/QA ledgers.
 
-Do not run every role for every trivial course. Usually 2–4 workers in a wave are enough. The auditor should review the integrated result, not run in parallel with implementation of the same files.
+Do not run every role for every trivial course. Usually 2–4 workers in a wave are enough. Avoid duplicate visual-runtime research if the assessment and visualization specialists would investigate the same tool. The auditor should review the integrated result, not run in parallel with implementation of the same files.
 
 ## 5. Context discipline for weaker models
 

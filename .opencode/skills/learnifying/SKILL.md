@@ -1,6 +1,6 @@
 ---
 name: Learnifying
-description: Turn a learner's topic and timeframe into a researched, structured Russian-language adaptive course and working React learning app. Use for curriculum design, theory-first lessons, progressive exercises, spaced repetition, browser-based assessment, and evidence-checked educational apps.
+description: Turn a learner's topic and timeframe into a researched Russian-language adaptive course and React learning app. Use for curriculum design, separate theory/practice pages, visual explanations with evidence-based custom-vs-library selection, progressive exercises, spaced repetition, browser assessment, and self-contained HTML releases.
 ---
 
 # Learnifying — Adaptive Learning App Builder
@@ -29,8 +29,9 @@ Do not stop at a syllabus or mock-up. Build the working application and its cour
 7. **Runnable product:** deliver a coherent React app with `index.html` as the HTML entry point, course data, progress persistence, responsive UI, and working checks for exercises wherever feasible.
 8. **Tool choice by evidence:** use third-party libraries when they materially improve authoring, rendering, simulation, or assessment. Verify current maintenance, compatibility, license, security, and browser support before adopting them.
 9. **No fake assessment:** label an exercise “automatically checked” only when an actual checker runs. Otherwise provide a rubric, model answer, or manual self-check and label it honestly.
-10. **Accessibility and safety:** make the app usable with keyboard and assistive technology; isolate learner-supplied code; do not put secrets in frontend code; do not execute arbitrary submitted code in the app's trusted origin.
-11. **Executive-function-friendly without academic dilution:** reduce friction around starting, planning, resuming, and tracking work; do not remove productive struggle, retrieval practice, depth, or mastery criteria. Read `references/executive-function-friendly-design.md` and build its principles into curriculum and UI decisions.
+10. **Visual explanations are a core teaching method:** when a concept benefits from visual representation, teach it with a carefully designed diagram, graph, animation, simulation, or interactive model alongside clear Russian-language explanation. Prefer visuals that reveal structure, change, cause-and-effect, spatial relationships, or the consequences of changing a parameter. Do not add decorative visuals merely to fill space. Plan visuals during curriculum design. **Before implementing each visual family, deliberately decide whether to build it with native/custom code or use an existing library.** Match research effort to complexity: simple visuals should normally use native HTML/CSS/SVG; specialised or complex visuals require current tool/library research and, when useful, the dedicated visualization subagent. Verify the proposed option against the single-file `file://` release target. Read `references/visual-learning-and-explanations.md` and `references/visualization-tool-selection.md`.
+11. **Accessibility and safety:** make the app usable with keyboard and assistive technology; isolate learner-supplied code; do not put secrets in frontend code; do not execute arbitrary submitted code in the app's trusted origin.
+12. **Executive-function-friendly without academic dilution:** reduce friction around starting, planning, resuming, and tracking work; do not remove productive struggle, retrieval practice, depth, or mastery criteria. Read `references/executive-function-friendly-design.md` and build its principles into curriculum and UI decisions.
 
 ## Workflow
 
@@ -71,8 +72,11 @@ Before research, summarize the agreed brief in Russian and explicitly mark assum
 
 ### Phase 3 — Curriculum architecture
 
-- Read `references/curriculum-design.md` and `references/executive-function-friendly-design.md`.
+- Read `references/curriculum-design.md`, `references/executive-function-friendly-design.md`, and `references/visual-learning-and-explanations.md`.
 - Define measurable outcomes, prerequisites, a diagnostic, units, lessons, calendar, checkpoints, cumulative reviews, and a final assessment/project.
+- For each key concept/outcome, decide whether a diagram, chart, sequence, animation, simulation, interactive model, visual code output, or other representation would materially improve understanding. Record its teaching purpose, visual type, interaction model, fallback, and preliminary complexity tier in the lesson manifest before implementation.
+- Do not select a library during curriculum design merely by habit. The visual manifest describes what the learner needs to understand; the implementation choice is made in Phase 5 after reading `references/visualization-tool-selection.md`.
+- Plan theory and assessed practice as distinct learner-facing pages/routes. The theory page may contain exploratory explanatory visualizations, but must not embed the lesson's graded exercise sequence; the practice page contains the exercises and assessment.
 - Allocate time to explanation, worked examples, practice, review, and assessment. Do not fill every available minute with new material.
 - Ensure each lesson has theory before practice and that every exercise maps to an outcome.
 - Design progressive difficulty and spaced repetition before writing the full lesson prose.
@@ -86,9 +90,14 @@ Before research, summarize the agreed brief in Russian and explicitly mark assum
 - For specialised domains (e.g. shaders, SQL, mathematics, music theory, 3D, data analysis), research and select appropriate current browser libraries or runtimes. Do not force a generic text quiz onto a task that should be executed, rendered, or simulated.
 - Provide a manual rubric and worked solution if a reliable automatic checker is not feasible.
 
-### Phase 5 — Build the application
+### Phase 5 — Research visual implementations and build the application
 
-- Read `references/app-architecture.md` and `references/executive-function-friendly-design.md`.
+- Read `references/app-architecture.md`, `references/executive-function-friendly-design.md`, and `references/visualization-tool-selection.md`.
+- For every visual family, decide native/custom vs. library before coding and record the rationale in the lesson manifest or `docs/VISUAL_IMPLEMENTATION_DECISIONS.md`.
+- Tier 0 visuals normally use native HTML/CSS/SVG or a small custom React component. Do not launch a research subagent for a trivial diagram.
+- For Tier 2 visuals, and uncertain Tier 1 cases, research current libraries and custom-build trade-offs before implementation. Use `learnifying-visualization-specialist` when available; avoid duplicate research if the assessment specialist is already investigating the same runtime.
+- For complex runtimes, require a minimal proof-of-feasibility spike that tests the actual feature in the proposed self-contained `index.html` opened through `file://`. A dev-server or HTTP preview is not enough.
+- The lead agent approves the choice. Implementation workers must not add or swap visual dependencies without recording and reporting a revised decision.
 - Use React. `index.html` must be the project HTML entry point. Prefer a small, conventional toolchain such as Vite + React when the environment supports package installation and builds; verify current versions and compatibility before pinning dependencies.
 - Keep curriculum content data-driven and separate from presentation. Do not hardcode a whole course into one giant component.
 - Implement course navigation, schedule, lesson view, theory, examples, exercises, feedback, review queue, progress, and settings at a minimum.
@@ -101,6 +110,10 @@ Before research, summarize the agreed brief in Russian and explicitly mark assum
 - Run install/build/lint/tests where tools permit. Launch the app and exercise its key flows in a browser when browser tools are available.
 - Test a fresh learner, a returning learner, a failed answer, a passed answer, a due review, a completed lesson, and persisted progress.
 - Check that every lesson follows the required order and that the schedule matches the stated duration and workload.
+- Check that theory and practice are on separate routes/pages, and that no graded exercise sequence is accidentally embedded at the bottom of the theory page.
+- Check each key concept for an appropriate visual explanation; verify that visuals are accurate, labelled, accessible, pedagogically useful, and not merely decorative.
+- Audit the custom-vs-library decision for every non-trivial visual. Confirm that complex library choices have current evidence for API/version, maintenance, licence, security, browser support, accessibility, bundle/runtime cost, offline use, and `file://` compatibility. Confirm that proof-of-feasibility results refer to the actual release strategy.
+- Open the exact final `index.html` from the filesystem (`file://`) in a supported browser. A dev-server preview does not satisfy this check.
 - Check all material claims against the claim ledger and all linked sources.
 - Report what was actually tested. Never say “tested” when only code was inspected.
 
@@ -108,7 +121,7 @@ Before research, summarize the agreed brief in Russian and explicitly mark assum
 
 Deliver:
 
-- The project path and the exact run command.
+- The project path and the exact learner-facing opening instruction. For the default single-file deliverable, this is to open `index.html`; do not require a dev server.
 - A concise explanation of the course structure and learning/review logic.
 - A description of what is automatically checked versus self-checked.
 - The source/verification notes and their “checked as of” date.
@@ -148,13 +161,18 @@ The task is complete only when all applicable items are true:
 
 - [ ] Learner brief and assumptions are recorded.
 - [ ] Course has outcomes, prerequisites, a duration-aware calendar, units, lessons, checkpoints, and a final assessment/project where appropriate.
-- [ ] Each normal lesson has theory, worked example(s), then practice.
+- [ ] Each lesson has a dedicated theory page and a separate practice page; explanatory explorations on the theory page are not confused with graded practice.
+- [ ] Each key concept has a purposeful visual explanation where the subject matter benefits from one, or a documented reason why a visual would add no value.
+- [ ] Visual explanations are accurate, labelled, accessible, complementary to text, and interactive where meaningful and technically feasible.
+- [ ] Every visual family has a reasoned native/custom-vs-library choice; complex choices have a research record and a tested proof-of-feasibility or a clearly disclosed blocker.
 - [ ] Difficulty progresses intentionally from scaffolded micro-tasks to independent/integrated tasks.
 - [ ] Previous material reappears through scheduled retrieval practice.
 - [ ] Every exercise has feedback and a real checker or an honestly labelled manual rubric.
 - [ ] Current and user-supplied materials are represented in source notes, with conflicts and limitations documented.
 - [ ] Material factual claims have traceable evidence and verification dates.
 - [ ] React app uses `index.html` as entry point and includes functioning navigation and progress persistence.
+- [ ] The final production deliverable is a single self-contained `index.html` that has been tested by opening it directly from disk without a local server, or any unavoidable compatibility exception is clearly documented.
+- [ ] Theory and practice use separate pages/routes.
 - [ ] Build and available tests pass, or failures/blockers are clearly reported.
 - [ ] Learner-facing UI and course content are in Russian.
 - [ ] The app reduces avoidable executive-function friction without weakening learning outcomes or assessment standards.

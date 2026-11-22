@@ -6,7 +6,11 @@
 - [ ] The calendar fits the chosen duration and available study time.
 - [ ] Prerequisites appear before dependent lessons.
 - [ ] Each learning outcome is taught and assessed.
-- [ ] Every normal lesson follows theory → worked example → practice.
+- [ ] Every lesson has a dedicated theory page and a separate practice page; no assigned graded exercise sequence is appended below the theory.
+- [ ] Theory includes purposeful visual explanations for key concepts where suitable, with a documented rationale when a visual adds no value.
+- [ ] Visuals directly support the learning outcome, are accurate and clearly labelled, and are explained in the surrounding text.
+- [ ] Interactive explanatory models work as intended, can be reset, are keyboard-operable, and have a static/stepwise fallback or an explicitly documented limitation.
+- [ ] Each non-trivial visual has a documented native/custom-vs-library decision; complex choices have current primary-source research and a packaged `file://` proof-of-feasibility or a documented blocker.
 - [ ] Early exercises are small and scaffolded; later tasks require increasing independence and integration.
 - [ ] Previously taught concepts reappear through due retrieval practice.
 - [ ] Review load is manageable and overdue items are not silently dropped.
@@ -27,6 +31,9 @@
 ## 3. Application functionality
 
 - [ ] Root `index.html` is present and is the app entry point.
+- [ ] The final production `index.html` is self-contained and opens from disk (`file://`) in a supported browser without a dev server or local HTTP server; test the exact deliverable, not only the dev build.
+- [ ] Hash-based theory/practice navigation works when opened from `file://`.
+- [ ] All required JS/CSS/assets are embedded; no required sibling asset folder, dynamic chunk, local server endpoint, or unpinned CDN dependency is needed for core learning flows.
 - [ ] Fresh install/build succeeds, or the blocker is documented.
 - [ ] Main navigation and all course routes/views work.
 - [ ] Lessons display theory before examples and practice.
@@ -37,6 +44,7 @@
 - [ ] Export/import or recovery behaviour works if implemented.
 - [ ] Schedule and progress remain coherent after changing availability.
 - [ ] Runtime/library failure produces a useful fallback, not a false pass.
+- [ ] No visual dependency was added without checking its exact API/version, licence, maintenance, security, browser support, accessibility, offline behaviour, and single-file packaging fit.
 
 ## 4. Security, privacy, accessibility
 
@@ -52,14 +60,16 @@
 
 1. Open the app as a new learner.
 2. Start and complete the diagnostic (if present).
-3. Open the first lesson; confirm theory appears before practice.
+3. Open the first lesson theory page; confirm it contains the intended explanations and visual aids, and does not contain the assigned graded practice set.
+3a. Navigate to the separate practice page; confirm exercises, checking, hints, and feedback work there.
 4. Submit a deliberately incorrect answer; confirm explanatory feedback and remediation.
 5. Submit a correct answer; confirm the checker really executes and progress updates.
 6. Reload the app; confirm progress persists.
 7. Trigger or simulate a due review; confirm a previously learned concept appears.
 8. Complete a review and check that its next due date changes appropriately.
 9. Navigate to a later, harder lesson and confirm scaffolding has been reduced as designed.
-10. Test any domain-specific renderer/runtime, including unsupported-device fallback.
+10. Test any domain-specific renderer/runtime, including unsupported-device fallback; compare observed behaviour to `docs/VISUAL_IMPLEMENTATION_DECISIONS.md`.
+11. Close the dev server, open the final `index.html` directly from disk (`file://`), and test reload, theory/practice navigation, visuals, and local progress storage.
 
 ## 6. Test reporting
 
